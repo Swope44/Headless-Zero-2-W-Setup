@@ -1,0 +1,166 @@
+# Robotics Hub - CLI Setup Guide
+
+This system is designed for headless, terminal-first deployment. The following instructions outline how to run the setup, verify integrity, handle errors, and maintain a lightweight configuration.
+
+---
+
+## 1. Run the Setup Script
+
+From the terminal, execute the following commands:
+
+```bash
+chmod +x final_setup_with_bitarray_fix.sh
+./final_setup_with_bitarray_fix.sh
+```
+
+This script will:
+- Set up the full project directory structure.
+- Create Python virtual environments.
+- Install required packages (e.g., `pyserial`, `bitarray`, `opencv`).
+- Create `systemd` services and log actions.
+
+---
+
+## 2. Logs and Backups
+
+- **Logs** are saved in: `~/SetupNotes/logs/`
+  - Setup logs: `setup_log_YYYYMMDD_HHMMSS.txt`
+  - Error logs: `error_log_YYYYMMDD_HHMMSS.txt`
+- **Backups** (for critical files like `README` and `.gitignore`) are stored in: `~/SetupNotes/backups/`
+
+---
+
+## 3. If You Encounter Errors
+
+1. **Check error logs**:
+   ```bash
+   cat ~/SetupNotes/logs/error_log_*.txt
+   ```
+
+2. **Fix missing dependencies** (e.g., `Python.h`):
+   ```bash
+   sudo apt install -y build-essential python3-dev
+   ```
+
+3. **Re-activate the virtual environment and retry installation**:
+   ```bash
+   source ~/robotics-hub/.env/esp32/bin/activate
+   pip install bitarray
+   ```
+
+---
+
+## 4. File Structure Check and Cleanup (Optional)
+
+After the initial setup, you can run the verification script:
+
+```bash
+./verify_project_integrity.sh
+```
+
+This script will:
+- Check if files and folders are in their expected locations.
+- Warn if there are deviations.
+- Prompt to clean up orphaned or unnecessary files.
+
+---
+
+## 5. Revert to a Clean State
+
+To restore a backup of a critical file, use the following command:
+
+```bash
+cp ~/SetupNotes/backups/README.md.bak_YYYYMMDD_HHMMSS ~/robotics-hub/README.md
+```
+
+---
+
+This guide ensures headless users can fully manage and troubleshoot the system from the terminal. **No GUI required.**===== Robotics Project Setup Started at Sun 13 Apr 16:46:45 CDT 2025 =====
+Creating project directories...
+Setting up venv for esp32...
+Activating esp32 and installing packages...
+Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+Requirement already satisfied: pip in /home/zero2w/robotics-hub/.env/esp32/lib/python3.11/site-packages (23.0.1)
+Collecting pip
+  Downloading https://www.piwheels.org/simple/pip/pip-25.0.1-py3-none-any.whl (1.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 2.1 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 23.0.1
+    Uninstalling pip-23.0.1:
+      Successfully uninstalled pip-23.0.1
+Successfully installed pip-25.0.1
+Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+Collecting pyserial
+  Downloading https://www.piwheels.org/simple/pyserial/pyserial-3.5-py2.py3-none-any.whl (90 kB)
+Collecting esptool
+  Downloading https://www.piwheels.org/simple/esptool/esptool-4.8.1-py3-none-any.whl (534 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 534.2/534.2 kB 1.4 MB/s eta 0:00:00
+Collecting bitstring!=4.2.0,>=3.1.6 (from esptool)
+  Downloading https://www.piwheels.org/simple/bitstring/bitstring-4.3.1-py3-none-any.whl (71 kB)
+Collecting cryptography>=2.1.4 (from esptool)
+  Downloading cryptography-44.0.2-cp39-abi3-manylinux_2_28_armv7l.manylinux_2_31_armv7l.whl.metadata (5.7 kB)
+Collecting ecdsa>=0.16.0 (from esptool)
+  Downloading https://www.piwheels.org/simple/ecdsa/ecdsa-0.19.1-py2.py3-none-any.whl (148 kB)
+Collecting reedsolo<1.8,>=1.5.3 (from esptool)
+  Downloading https://www.piwheels.org/simple/reedsolo/reedsolo-1.7.0-py3-none-any.whl (32 kB)
+Collecting PyYAML>=5.1 (from esptool)
+  Downloading https://www.piwheels.org/simple/pyyaml/PyYAML-6.0.2-cp311-cp311-linux_armv7l.whl (45 kB)
+Collecting intelhex (from esptool)
+  Downloading https://www.piwheels.org/simple/intelhex/intelhex-2.3.0-py2.py3-none-any.whl (50 kB)
+Collecting argcomplete>=3 (from esptool)
+  Downloading argcomplete-3.6.2-py3-none-any.whl.metadata (16 kB)
+Collecting bitarray<4.0,>=3.0.0 (from bitstring!=4.2.0,>=3.1.6->esptool)
+  Downloading bitarray-3.3.1.tar.gz (139 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting cffi>=1.12 (from cryptography>=2.1.4->esptool)
+  Downloading https://www.piwheels.org/simple/cffi/cffi-1.17.1-cp311-cp311-linux_armv7l.whl (384 kB)
+Collecting six>=1.9.0 (from ecdsa>=0.16.0->esptool)
+  Downloading https://www.piwheels.org/simple/six/six-1.17.0-py2.py3-none-any.whl (11 kB)
+Collecting pycparser (from cffi>=1.12->cryptography>=2.1.4->esptool)
+  Downloading https://www.piwheels.org/simple/pycparser/pycparser-2.22-py3-none-any.whl (117 kB)
+Downloading argcomplete-3.6.2-py3-none-any.whl (43 kB)
+Downloading cryptography-44.0.2-cp39-abi3-manylinux_2_28_armv7l.manylinux_2_31_armv7l.whl (3.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 2.4 MB/s eta 0:00:00
+Building wheels for collected packages: bitarray
+  Building wheel for bitarray (pyproject.toml): started
+  Building wheel for bitarray (pyproject.toml): finished with status 'error'
+  error: subprocess-exited-with-error
+  
+  × Building wheel for bitarray (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [23 lines of output]
+      running bdist_wheel
+      running build
+      running build_py
+      creating build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/test_util.py -> build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/test_bitarray.py -> build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/util.py -> build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/__init__.py -> build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/__init__.pyi -> build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/util.pyi -> build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/py.typed -> build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/bitarray.h -> build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/pythoncapi_compat.h -> build/lib.linux-armv7l-cpython-311/bitarray
+      copying bitarray/test_281.pickle -> build/lib.linux-armv7l-cpython-311/bitarray
+      running build_ext
+      building 'bitarray._bitarray' extension
+      creating build/temp.linux-armv7l-cpython-311/bitarray
+      arm-linux-gnueabihf-gcc -Wsign-compare -DNDEBUG -g -fwrapv -O2 -Wall -g -fwrapv -O2 -fPIC -I/home/zero2w/robotics-hub/.env/esp32/include -I/usr/include/python3.11 -c bitarray/_bitarray.c -o build/temp.linux-armv7l-cpython-311/bitarray/_bitarray.o
+      bitarray/_bitarray.c:12:10: fatal error: Python.h: No such file or directory
+         12 | #include "Python.h"
+            |          ^~~~~~~~~~
+      compilation terminated.
+      error: command '/usr/bin/arm-linux-gnueabihf-gcc' failed with exit code 1
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+  ERROR: Failed building wheel for bitarray
+Failed to build bitarray
+ERROR: Failed to build installable wheels for some pyproject.toml based projects (bitarray)
